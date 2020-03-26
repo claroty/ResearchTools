@@ -1,3 +1,4 @@
+
 # Renamer
 A plugin which helps in the process of naming functions based on their strings.
 
@@ -14,3 +15,17 @@ Copy `renamer.py` to IDA plugin's directory, usually at: `C:\Program Files\IDA\p
 
 ## Tested versions
 - v7.3
+
+## Known Issues
+
+**AttributeError: ‘module’ object has no attribute ‘MAXSTR’**
+
+Some users report they receive a traceback related to MAXSTR not being found. It'a a bug in some versions of IDAPython API, specifically in the function `SetControlValue` which seems have broken in some API migration.
+>   File "C:\Program Files\IDA Pro 7.3\python\ida_kernwin.py", line
+> 6924, in SetControlValue  
+>     tid, _ = self.ControlToFieldTypeIdAndSize(ctrl)     File "C:\Program Files\IDA Pro 7.3\python\ida_kernwin.py", line 6951, in
+> ControlToFieldTypeIdAndSize  
+>     return (3, min(_ida_kernwin.MAXSTR, ctrl.size)) 
+>     AttributeError: 'module' object has no attribute 'MAXSTR'
+
+The solution is to manually edit `C:\Program Files\IDA Pro 7.x\python\ida_kernwin.py` and replace  `_ida_kernwin.MAXSTR` with some big number (e.g. 65536).
