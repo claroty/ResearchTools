@@ -9,10 +9,7 @@ from idc import *
 
 
 ############ TODO ##########
-# 1. Bug: when activating the plugin, then closing and trying to activate again, IDA crashes.
-# 2. Bug: when selecting a line in the Chooser and moving to the next function, the same line (index wise) will not be clickable (only after double-click).
-# 3. Test: v7.0, v7.1, v7.2, v7.4
-# 4. Feature: open it in bottom bar instead of upper tab - so moving between functions will be comfortable.
+# 1. Bug: when selecting a line in the Chooser and moving to the next function, the same line (index wise) will not be clickable (only after double-click).
 ############################
 
 
@@ -287,11 +284,10 @@ class FunctionRenamer(ida_idaapi.plugin_t):
     def init(self):
         required_ver = "7.0"
         if not is_ida_version(required_ver) or not init_hexrays_plugin():
-            msg("[!] '%s' is inactive (IDA v%s required).\n" % (FunctionRenamer.wanted_name, required_ver))
+            msg ("[!] '%s' is inactive (IDA v%s required).\n" % (FunctionRenamer.wanted_name, required_ver))
             return PLUGIN_SKIP
-
         msg("[+] '%s' loaded. %s activates renamer.\n" % (FunctionRenamer.wanted_name, FunctionRenamer.wanted_hotkey))
-        return PLUGIN_KEEP
+        return PLUGIN_OK
 
     def run(self, arg):
         # Popup window
@@ -305,21 +301,18 @@ class FunctionRenamer(ida_idaapi.plugin_t):
             # Dispose the form
             rf.Free()
         else:
-            if FunctionRenamer.NON_MODAL_INSTANCE is None:
-                # Init
-                rf = RenameForm()
-                # Set flags
-                rf.modal = False
-                rf.openform_flags = ida_kernwin.PluginForm.FORM_TAB
-                # Compile (in order to populate the controls)
-                rfc, _ = rf.Compile()
-                FunctionRenamer.NON_MODAL_INSTANCE = rfc                
+            # Init
+            rf = RenameForm()
+            # Set flags
+            rf.modal = False
+            rf.openform_flags = ida_kernwin.PluginForm.FORM_TAB
+            # Compile (in order to populate the controls)
+            rfc, _ = rf.Compile()
+            FunctionRenamer.NON_MODAL_INSTANCE = rfc
             # Execute the form
             FunctionRenamer.NON_MODAL_INSTANCE.Open()
 
     def term(self):
-        FunctionRenamer.NON_MODAL_INSTANCE.Free()
-        FunctionRenamer.NON_MODAL_INSTANCE = None
         msg("[+] %s unloaded.\n" % (FunctionRenamer.wanted_name))
 
 # Plugin entry
