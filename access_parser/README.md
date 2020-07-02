@@ -4,7 +4,7 @@ access_parser parsing logic is fully written in python and works without any ext
 
 # Installing:
 ```bash
-git clone https://github.com/ClarotyICS/ResearchTools/access_parser.git
+git clone https://github.com/ClarotyICS/ResearchTools.git
 cd access_parser
 python3 setup.py install
 ```
