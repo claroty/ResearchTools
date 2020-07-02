@@ -6,3 +6,4 @@ A collection of tools we developed to accelerate our security research projects.
 | Tools | Description |
 | :---: |-------------|
 |IDA| A collection of ida utilities including scripts and plugins we developed over the years.|
+|access_parser| Microsoft Access (.mdb / .accdb) database files parser
