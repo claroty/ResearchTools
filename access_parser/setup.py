@@ -11,7 +11,7 @@ setuptools.setup(
     description="Access database (*.mdb, *.accdb) parser",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/ClarotyICS/ResearchTools/access_parser",
+    url="https://github.com/ClarotyICS/ResearchTools",
     packages=setuptools.find_packages(),
     classifiers=[
         "Programming Language :: Python :: 3",
